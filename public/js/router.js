@@ -1,3 +1,4 @@
+import signup from './pages/signup.js';
 import queryparser from './utils/queryparser.js'
 
 const router = () => {
@@ -17,7 +18,8 @@ const router = () => {
         case "login":
         
         case "signup":
-        
+            signup();
+            break;
         case "setregion":
         
         case "post":
@@ -32,7 +34,7 @@ window.addEventListener('DOMContentLoaded', router());
 window.addEventListener('locationchange', () => {
     console.log("locationchanged");
     router();
-})
+});
 
 window.addEventListener('popstate', () => router());
 
