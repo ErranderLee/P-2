@@ -1,15 +1,14 @@
-export default function signup() {
+export default function login() {
     const $ = document;
     const content = $.querySelector('.content');
 
     content.innerHTML = `
-    <div class="content_signup">
+    <div class="content_login">
         <form class="form">
             <input class="inputid" type="text" placeholder="아이디를 입력해주세요" required/>
             <input class="inputpw" type="text" placeholder="비밀번호를 입력해주세요" required/>
-            <input class="inputregion" type="text" placeholder="지역을 입력해주세요" required/>
-            <input class="cancel" type="button" value="취소">
-            <input type="submit" value="회원가입">
+            <input class="signup" type="button" value="회원가입">
+            <input type="submit" value="로그인">
         </form>
     </div>`
 
@@ -18,18 +17,17 @@ export default function signup() {
         event.preventDefault();
         const inputId = $.querySelector('.inputid').value;
         const inputPw = $.querySelector('.inputpw').value;
-        const inputRegion = $.querySelector('.inputregion').value;
 
-        axios.post('/signup', {
+        axios.post('/login', {
             id: inputId,
             password: inputPw,
-            region: inputRegion
         })
         .then((res) => {
             if(res.data.success) {
-                // 
+                history.pushState(null, null, '/');
+                window.dispatchEvent(new Event('locationchange'));
             } else {
-                alert("msg :", res.msg);
+                alert(res.data.msg.msg);
             }
         })
         .catch((err) => console.error(err));

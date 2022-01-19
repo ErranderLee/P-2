@@ -1,14 +1,24 @@
+
+import login from './pages/login.js';
+import main from './pages/main.js';
 import signup from './pages/signup.js';
 import queryparser from './utils/queryparser.js'
 
-const router = () => {
+const router = async () => {
     const params = queryparser(location.search);
     const pages = ['main', 'likelist', 'chatlist', 'login', 'signup', 'setregion', 'post', 'chatroom'];
     const page = pages.filter(item => item === params.page).join("");
 
+    if (Object.keys(params).length === 0) {
+        const regionsData = await axios.get('/region');
+        const regions = regionsData.data;
+        history.pushState(null, null, `?page=main&region=${regions[0].name}`);
+        window.dispatchEvent(new Event('locationchange'));
+    }
+
     switch(page) {
         case "main":
-            console.log("main");
+            main(params);
             break;
         case "likelist":
             console.log("likelist");
@@ -16,7 +26,8 @@ const router = () => {
         case "chatlist":
         
         case "login":
-        
+            login();
+            break;
         case "signup":
             signup();
             break;
@@ -29,7 +40,7 @@ const router = () => {
     }
 };
 
-window.addEventListener('DOMContentLoaded', router());
+window.addEventListener('DOMContentLoaded', () => router());
 
 window.addEventListener('locationchange', () => {
     console.log("locationchanged");

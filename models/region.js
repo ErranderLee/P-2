@@ -16,7 +16,7 @@ module.exports = class Region extends Model {
             sequelize,
             modelName: 'Region',
             tableName: 'region',
-            timestamps: true,
+            timestamps: false,
             charset: 'utf8',
             collate: 'utf8_general_ci',
         });
