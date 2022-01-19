@@ -35,9 +35,6 @@ module.exports = class Post extends Model {
     }
 
     static associate(db) {
-        db.Post.belongsTo(db.Store, { foreignKey: 'storeid' });
-        db.Post.hasMany(db.Chatroom, { foreignKey: 'postid' });
-        db.Post.hasMany(db.Likes, { foreignKey: 'postid' });
-        db.Post.hasMany(db.Image, { foreignKey: 'postid' });
+        
     }
 }

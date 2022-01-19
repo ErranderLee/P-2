@@ -23,8 +23,6 @@ module.exports = class Chatmessage extends Model {
     }
 
     static associate(db) {
-        db.Chatmessage.belongsTo(db.User, { foreignKey: 'userid' });
-        db.Chatmessage.belongsTo(db.Post, { foreignKey: 'postid' });
-        db.Chatmessage.belongsTo(db.Chatroom, { foreignKey: 'chatroomid' });
+        
     }
 }

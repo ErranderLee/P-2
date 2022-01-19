@@ -15,7 +15,6 @@ module.exports = class Likes extends Model {
     }
 
     static associate(db) {
-        db.Likes.belongsTo(db.User, { foreignKey: 'userid' });
-        db.Likes.belongsTo(db.Post, { foreignKey: 'postid' });
+        
     }
 }

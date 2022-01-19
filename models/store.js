@@ -27,6 +27,6 @@ module.exports = class Store extends Model {
     }
 
     static associate(db) {
-        db.Store.hasMany(db.Post, { foreignKey: 'storeid' });
+        
     }
 }

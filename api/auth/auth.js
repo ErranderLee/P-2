@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const { User, Region, User_Region } = require('../../models');
 
 router.post('/signup', async (req, res) => {
+    const exRegion = await Region.create({ name: '광교'});
     const { id, password, region } = req.body;
     const exUser = await User.findOne({ where: { id } });
     const response = { success: true, msg: "회원가입 성공!" };
@@ -13,8 +14,11 @@ router.post('/signup', async (req, res) => {
         res.json(response);
     }
     const hash = await bcrypt.hash(password, 10);
-    const newUser = await User.create({ id, password: hash });
-    
+    const newUser = await User.create({ 
+        id,
+        password: hash,
+    });
+    await newUser.addRegion(exRegion);
     res.json(response);
 });
 

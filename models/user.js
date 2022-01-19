@@ -27,9 +27,6 @@ module.exports = class User extends Model {
     }
 
     static associate(db) {
-        db.User.hasMany(db.User_Region, { foreignKey: 'userid' });
-        db.User.hasMany(db.Likes, { foreignKey: 'userid' });
-        db.User.hasMany(db.Chatroom, { foreignKey: 'userid' });
-        db.User.hasMany(db.Chatmessage, { foreignKey : 'userid' });
+        db.User.belongsToMany(db.Region, { through: db.User_Region });
     }
 }

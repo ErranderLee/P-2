@@ -39,22 +39,22 @@ db.Chatmessage = Chatmessage;
 
 User.init(sequelize);
 User_Region.init(sequelize);
-Store.init(sequelize);
 Region.init(sequelize);
-Post.init(sequelize);
-Likes.init(sequelize);
-Image.init(sequelize);
-Chatroom.init(sequelize);
-Chatmessage.init(sequelize);
+// Store.init(sequelize);
+// Post.init(sequelize);
+// Likes.init(sequelize);
+// Image.init(sequelize);
+// Chatroom.init(sequelize);
+// Chatmessage.init(sequelize);
 
 User.associate(db);
 User_Region.associate(db);
-Store.associate(db);
 Region.associate(db);
-Post.associate(db);
-Likes.associate(db);
-Image.associate(db);
-Chatroom.associate(db);
-Chatmessage.associate(db);
+// Store.associate(db);
+// Post.associate(db);
+// Likes.associate(db);
+// Image.associate(db);
+// Chatroom.associate(db);
+// Chatmessage.associate(db);
 
 module.exports = db;

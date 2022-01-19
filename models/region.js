@@ -23,6 +23,6 @@ module.exports = class Region extends Model {
     }
 
     static associate(db) {
-        db.Region.hasMany(db.User_Region, { foreignKey: 'regionid' });
+        db.Region.belongsToMany(db.User, { through: db.User_Region });
     }
 }

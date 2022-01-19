@@ -8,14 +8,13 @@ module.exports = class User_Region extends Model {
             sequelize,
             modelName: 'User_Region',
             tableName: 'user_region',
-            timestamps: true,
+            timestamps: false,
             charset: 'utf8',
             collate: 'utf8_general_ci',
         });
     }
 
     static associate(db) {
-        db.User_Region.belongsTo(db.User, { foreignKey: 'userid' });
-        db.User_Region.belongsTo(db.Region, { foreignKey: 'regionid' });
+        
     }
 }

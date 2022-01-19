@@ -19,8 +19,6 @@ module.exports = class Chatroom extends Model {
     }
 
     static associate(db) {
-        db.Chatroom.belongsTo(db.User, { foreignKey: 'userid' });
-        db.Chatroom.belongsTo(db.Post, { foreignKey: 'postid' });
-        db.Chatroom.hasMany(db.Chatmessage, { foreignKey: 'chatroomid' });
+        
     }
 }
