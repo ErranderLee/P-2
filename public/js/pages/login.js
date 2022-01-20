@@ -13,6 +13,8 @@ export default function login() {
     </div>`
 
     const loginForm = $.querySelector('.form');
+    const signUp = $.querySelector('.signup');
+
     loginForm.addEventListener('submit', (event) => {
         event.preventDefault();
         const inputId = $.querySelector('.inputid').value;
@@ -31,5 +33,10 @@ export default function login() {
             }
         })
         .catch((err) => console.error(err));
+    });
+
+    signUp.addEventListener('click', () => {
+        history.pushState(null, null, '?page=signup');
+        window.dispatchEvent(new Event('locationchange'));
     })
 }

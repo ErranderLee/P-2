@@ -24,7 +24,7 @@ app.use(session({ secret: '비밀코드', resave: false, saveUninitialized: fals
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', getDataApi);
+app.use('/data', getDataApi);
 app.use('/auth', authApi);
 app.get("/*", (req, res) => {
     res.sendFile(path.resolve('public', 'index.html'));
