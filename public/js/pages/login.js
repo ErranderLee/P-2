@@ -18,7 +18,7 @@ export default function login() {
         const inputId = $.querySelector('.inputid').value;
         const inputPw = $.querySelector('.inputpw').value;
 
-        axios.post('/login', {
+        axios.post('/auth/login', {
             id: inputId,
             password: inputPw,
         })

@@ -25,7 +25,6 @@ router.post('/signup', async (req, res) => {
 });
 
 router.post('/login', (req, res, next) => {
-    // passport는 미들웨어로 쓰여야 하는데 이와 같이 콜백으로 쓰기 위해서는 req.logIn을 사용해야 한다. <- 추가적인 공부 필요.
     passport.authenticate('local', (err, user, info) => {
         console.log(err, user, info);
         if(err) {
@@ -39,9 +38,23 @@ router.post('/login', (req, res, next) => {
                 console.error(loginError);
                 return;
             }
-            res.json({ success: true, msg: '로그인 성공!' }); // res로 보내줘야 세션에 user가 저장됨.
+            res.json({ success: true, msg: '로그인 성공!' });
         });
     })(req, res, next);
 });
+
+router.get('/getAuthenticatedUser', (req, res, next) => {
+    if(req.isAuthenticated() === true) {
+        res.json(req.user);
+    } else {
+        res.json({});
+    }
+});
+
+router.get('/logout', (req, res, next) => {
+    req.logout();
+    req.session.destroy();
+    res.redirect('/');
+})
 
 module.exports = router;

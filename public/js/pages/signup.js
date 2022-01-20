@@ -20,7 +20,7 @@ export default function signup() {
         const inputPw = $.querySelector('.inputpw').value;
         const inputRegion = $.querySelector('.inputregion').value;
 
-        axios.post('/signup', {
+        axios.post('/auth/signup', {
             id: inputId,
             password: inputPw,
             region: inputRegion

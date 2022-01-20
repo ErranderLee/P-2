@@ -8,12 +8,24 @@ const router = async () => {
     const params = queryparser(location.search);
     const pages = ['main', 'likelist', 'chatlist', 'login', 'signup', 'setregion', 'post', 'chatroom'];
     const page = pages.filter(item => item === params.page).join("");
+    const $ = document;
+
+    const authenticatedUserTemp = await axios.get('/auth/getAuthenticatedUser');
+    const authenticatedUser = authenticatedUserTemp.data;
+    const divLogin = $.querySelector('.header_login');
+
+    if(Object.keys(authenticatedUser).length) {
+        divLogin.innerText = authenticatedUser.id;
+    }
 
     if (Object.keys(params).length === 0) {
-        const regionsData = await axios.get('/region');
-        const regions = regionsData.data;
-        history.pushState(null, null, `?page=main&region=${regions[0].name}`);
-        window.dispatchEvent(new Event('locationchange'));
+        if(Object.keys(authenticatedUser).length === 0) {
+            history.pushState(null, null, `?page=main`);
+            window.dispatchEvent(new Event('locationchange'));
+        } else {
+            history.pushState({'userid': authenticatedUser.userid}, null, `?page=main`);
+            window.dispatchEvent(new Event('locationchange'));
+        }
     }
 
     switch(page) {

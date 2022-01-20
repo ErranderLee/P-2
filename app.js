@@ -23,7 +23,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', getDataApi);
-app.use('/', authApi);
+app.use('/auth', authApi);
 app.get("/*", (req, res) => {
     res.sendFile(path.resolve('public', 'index.html'));
 })
