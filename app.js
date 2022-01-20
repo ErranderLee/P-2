@@ -11,10 +11,12 @@ const session = require('express-session');
 const passport = require('passport');
 const passportConfig = require('./api/auth/passport/passport');
 
-sequelize.sync({ force: false })
+
+sequelize.sync({ force: true })
     .then(() => console.log('database connected'))
     .catch((err) => console.error(err));
 passportConfig();
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));  // 한글 공백 포함되면 제대로 인식되지 않는 문제 해결.
 app.use(express.json());

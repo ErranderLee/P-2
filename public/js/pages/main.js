@@ -13,7 +13,25 @@ export default async function main(params) {
         history.pushState(null, null, `?page=main&region=${regions[0].name}`);
         window.dispatchEvent(new Event('locationchange'));
     } else {
-        // params에서 지역에 맞는 게시글 보여주기.
+        const region = params.region;
+        const postsTemp = await axios.get('/post', { params: { region: region }});
+        const posts = postsTemp.data;
+        
+        const $ = document;
+        const content = $.querySelector('.content');
+        content.innerHTML = `
+        <div class="posts">
+            ${posts.map((post, index) => {
+                return `<div class="post" id=${index}>
+                        <div class="post_region">${region}</div>
+                        <div class="post_sec_deposit">${post.sec_deposit}</div>
+                        <div class="post_monthly">${post.monthly}</div>
+                        <div class="post_manage_fee">${post.manage_fee}</div>
+                        <div class="post_store">${post.Store.name}</div>
+                        </div>`
+            }).join('')}
+        </div>
+        `;
     }
 
 }

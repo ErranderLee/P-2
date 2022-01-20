@@ -24,5 +24,6 @@ module.exports = class Region extends Model {
 
     static associate(db) {
         db.Region.belongsToMany(db.User, { through: db.User_Region });
+        db.Region.hasMany(db.Post);
     }
 }

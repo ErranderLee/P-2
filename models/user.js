@@ -28,5 +28,6 @@ module.exports = class User extends Model {
 
     static associate(db) {
         db.User.belongsToMany(db.Region, { through: db.User_Region });
+        db.User.belongsToMany(db.Post, { through : db.Likes });
     }
 }

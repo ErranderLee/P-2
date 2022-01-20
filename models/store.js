@@ -20,13 +20,13 @@ module.exports = class Store extends Model {
             sequelize,
             modelName: 'Store',
             tableName: 'store',
-            timestamps: true,
+            timestamps: false,
             charset: 'utf8',
             collate: 'utf8_general_ci',
         });
     }
 
     static associate(db) {
-        
+        db.Store.hasMany(db.Post);
     }
 }

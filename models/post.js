@@ -10,18 +10,26 @@ module.exports = class Post extends Model {
             },
             sec_deposit: {
                 type: DataTypes.INTEGER,
-                allowNull: false
+                allowNull: true
             },
             monthly: {
                 type: DataTypes.INTEGER,
-                allowNull: false
+                allowNull: true
             },
             manage_fee: {
                 type: DataTypes.INTEGER,
-                allowNull: false
+                allowNull: true
             },
             num_chat: {
                 type: DataTypes.INTEGER,
+                allowNull: false
+            },
+            address: {
+                type: DataTypes.STRING(30),
+                allowNull: true
+            },
+            options: {
+                type: DataTypes.TEXT,
                 allowNull: false
             }
         }, {
@@ -35,6 +43,9 @@ module.exports = class Post extends Model {
     }
 
     static associate(db) {
-        
+        db.Post.belongsTo(db.Region);
+        db.Post.hasMany(db.Image);
+        db.Post.belongsTo(db.Store);
+        db.Post.belongsToMany(db.User, { through : db.Likes });
     }
 }
