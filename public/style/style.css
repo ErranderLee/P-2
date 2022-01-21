@@ -2,5 +2,10 @@
     display: none;
 }
 .filllike {
-    color: red;
+    background-color: red !important;
+    color: white !important;
+}
+.like_button {
+    background-color: white;
+    border: 1px solid black;
 }

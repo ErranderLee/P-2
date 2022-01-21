@@ -15,7 +15,14 @@ export default async function main(params) {
     } else {
         const region = params.region;
         const postsTemp = await axios.get('/data/post', { params: { region: region }});
-        const posts = postsTemp.data;
+        const posts = postsTemp.data.posts;
+        const likePosts = postsTemp.data.likePostsIds;
+        let likePostsIds = [];
+
+        if(likePosts !== null) {
+            likePosts.map((post) => { likePostsIds.push(post.postid) });
+        }
+
         const $ = document;
         const content = $.querySelector('.content');
         const authenticatedUserTemp = await axios.get('/auth/getAuthenticatedUser');
@@ -30,22 +37,31 @@ export default async function main(params) {
                         <div class="post_monthly">월세 : ${post.monthly}만원</div>
                         <div class="post_manage_fee">관리비 : ${post.manage_fee}만원</div>
                         <div class="post_store">${post.Store.name}</div>
-                        <div class="like" id=${index}><button>like</button></div>
+                        <div class="like" id=${index}><button class="like_button" id=${post.postid}>Like</button></div>
                         </div>`
             }).join('')}
         </div>
         `;
+
+        if(likePostsIds.length > 0) {
+            const btns = $.querySelectorAll('button');
+            btns.forEach((btn) => {
+                if(likePostsIds.includes(parseInt(btn.id))) {
+                    console.log(btn.id);
+                    btn.classList.add('filllike');
+                }
+            })
+        }
         
         const postsDiv = $.querySelector('.posts');
         postsDiv.addEventListener('click', async (event) => {
-            console.log(authenticatedUser);
             if(event.target.tagName === 'BUTTON') {
                 if(Object.keys(authenticatedUser).length) {
+                    const btn = event.target;
                     const parent = event.target.parentElement
                     const id = parent.id;
-                    parent.classList.toggle('filllike');
-                    if(parent.classList.contains('filllike')) {
-                        // authenticatedUser.userid 사용하여 좋아요 추가
+                    btn.classList.toggle('filllike');
+                    if(btn.classList.contains('filllike')) {
                         axios.post('/set/like', {
                             post: posts[id]
                         });
@@ -59,7 +75,6 @@ export default async function main(params) {
                 } else {
                     alert('좋아요 기능을 사용하려면 로그인 하세요.');
                 }
-                // posts[id].postid
             } else {
                 // 상세게시글
             } 

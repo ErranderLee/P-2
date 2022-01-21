@@ -28,7 +28,8 @@ export default function signup() {
         .then((res) => {
             const result = res.data
             if(result.success) {
-                // 
+                history.pushState(null, null, '?page=login');
+                window.dispatchEvent(new Event('locationchange')); 
             } else {
                 alert(`msg : ${result.msg}`);
             }
