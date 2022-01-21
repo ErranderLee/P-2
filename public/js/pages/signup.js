@@ -26,10 +26,11 @@ export default function signup() {
             region: inputRegion
         })
         .then((res) => {
-            if(res.data.success) {
+            const result = res.data
+            if(result.success) {
                 // 
             } else {
-                alert("msg :", res.msg);
+                alert(`msg : ${result.msg}`);
             }
         })
         .catch((err) => console.error(err));

@@ -1,5 +1,5 @@
 const { sequelize, User, User_Region, Store, Region, Post, Likes, Image, Chatroom, Chatmessage } = require('./models');
-
+const bcrypt = require('bcrypt');
 module.exports = async () => {
     const s1 = await Store.create({name : '해피부동산', hp : '010-1234-5678' });
     const s2 = await Store.create({name : '배드부동산', hp : '010-2234-5678' });
@@ -41,7 +41,8 @@ module.exports = async () => {
     const r2 = await Region.create({ name : '원천' });
     const r3 = await Region.create({ name : '우만' });
 
-    const u1 = await User.create({ id: 'test', password: 'test' });
+    const password = await bcrypt.hash('test', 10);
+    const u1 = await User.create({ id: 'test', password: password });
     await u1.addRegion(r1);
     await s1.addPost(p1);
     await s1.addPost(p2);

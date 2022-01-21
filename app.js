@@ -7,6 +7,7 @@ const querystring = require('querystring');
 const { sequelize, User, User_Region, Store, Region, Post, Likes, Image, Chatroom, Chatmessage } = require('./models');
 const authApi = require('./api/auth/auth');
 const getDataApi = require('./api/page/getData');
+const setDataApi = require('./api/page/setData');
 const session = require('express-session');
 const passport = require('passport');
 const passportConfig = require('./api/auth/passport/passport');
@@ -26,6 +27,7 @@ app.use(passport.session());
 
 app.use('/data', getDataApi);
 app.use('/auth', authApi);
+app.use('/set', setDataApi);
 app.get("/*", (req, res) => {
     res.sendFile(path.resolve('public', 'index.html'));
 })

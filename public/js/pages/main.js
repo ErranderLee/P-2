@@ -39,23 +39,30 @@ export default async function main(params) {
         const postsDiv = $.querySelector('.posts');
         postsDiv.addEventListener('click', async (event) => {
             console.log(authenticatedUser);
-            if(Object.keys(authenticatedUser).length) {
-                if(event.target.tagName === 'BUTTON') {
+            if(event.target.tagName === 'BUTTON') {
+                if(Object.keys(authenticatedUser).length) {
                     const parent = event.target.parentElement
                     const id = parent.id;
                     parent.classList.toggle('filllike');
                     if(parent.classList.contains('filllike')) {
                         // authenticatedUser.userid 사용하여 좋아요 추가
+                        axios.post('/set/like', {
+                            post: posts[id]
+                        });
                     } else {
-                        // 좋아요 삭제
+                        axios.delete('/set/like', {
+                            data : {
+                                post: posts[id]
+                            }
+                        })
                     }
-                    // posts[id].postid
                 } else {
-                    // 상세게시글
+                    alert('좋아요 기능을 사용하려면 로그인 하세요.');
                 }
+                // posts[id].postid
             } else {
-                alert('좋아요 기능을 사용하려면 로그인 하세요.');
-            }
-        })
+                // 상세게시글
+            } 
+        });
     }
 }
