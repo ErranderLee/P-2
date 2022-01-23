@@ -18,9 +18,9 @@ router.get('/region', async (req, res) => {
 router.get('/post', async (req, res) => {
     const region = await Region.findOne({ where : { name: req.query.region } });
     const posts = await region.getPosts({ include: { model: Store }});
-    let likePostsIds;
+    let likePosts;
     if(req.isAuthenticated() === true) {
-        likePostsIds = await region.getPosts({
+        likePosts = await region.getPosts({
             include: {
                 model: User,
                 where: {
@@ -29,11 +29,10 @@ router.get('/post', async (req, res) => {
             }
         }
         );
-        // console.log(likePostsIds);
-        res.json({ posts: posts, likePostsIds: likePostsIds });
+        res.json({ posts: posts, likePosts: likePosts });
     }
-    else res.json({ posts: posts, likePostsIds: null });
-})
+    else res.json({ posts: posts, likePosts: null });
+});
 
 router.get('/createTestDB', async (req, res) => {
     testDb();

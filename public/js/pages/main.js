@@ -9,24 +9,18 @@ export default async function main(params) {
         } else {
             regionsTemp = await axios.get('/data/region');
         }
-        const regions = regionsTemp.data;
+        const { data: regions } = regionsTemp;
         history.pushState(null, null, `?page=main&region=${regions[0].name}`);
         window.dispatchEvent(new Event('locationchange'));
     } else {
         const region = params.region;
-        const postsTemp = await axios.get('/data/post', { params: { region: region }});
-        const posts = postsTemp.data.posts;
-        const likePosts = postsTemp.data.likePostsIds;
-        let likePostsIds = [];
+        const { data : { posts, likePosts } } = await axios.get('/data/post', { params: { region: region }});
 
-        if(likePosts !== null) {
-            likePosts.map((post) => { likePostsIds.push(post.postid) });
-        }
+        const likePostsIds = likePosts !== null ? likePosts.map(post => post.postid) : [];
 
         const $ = document;
         const content = $.querySelector('.content');
-        const authenticatedUserTemp = await axios.get('/auth/getAuthenticatedUser');
-        const authenticatedUser = authenticatedUserTemp.data;
+        const { data: authenticatedUser } = await axios.get('/auth/getAuthenticatedUser');
 
         content.innerHTML = `
         <div class="posts">
