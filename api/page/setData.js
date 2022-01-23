@@ -1,19 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { User, Post } = require('../../models');
+const { postLike, deleteLike } = require('../service/setData');
 
-router.post('/like', async (req, res) => {
-    const exUser = req.user;
-    const post = new Post(req.body.post);
-    console.log(post);
-    await exUser.addPost(post);
-    res.json();
-});
+router.post('/like', postLike);
 
-router.delete('/like', async (req, res) => {
-    const exUser = req.user;
-    const post = new Post(req.body.post);
-    await exUser.removePost(post);
-});
+router.delete('/like', deleteLike);
 
 module.exports = router;
