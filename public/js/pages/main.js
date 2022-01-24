@@ -1,3 +1,4 @@
+import detailpost from "./detailpost.js";
 
 export default async function main(params) {    
     if(Object.keys(params).length === 1) {
@@ -41,7 +42,8 @@ export default async function main(params) {
             const btns = $.querySelectorAll('button');
             btns.forEach((btn) => {
                 if(likePostsIds.includes(parseInt(btn.id))) {
-                    console.log(btn.id);
+                    const index = btn.parentElement.id;
+                    posts[index].like = true;
                     btn.classList.add('filllike');
                 }
             })
@@ -52,14 +54,16 @@ export default async function main(params) {
             if(event.target.tagName === 'BUTTON') {
                 if(Object.keys(authenticatedUser).length) {
                     const btn = event.target;
-                    const parent = event.target.parentElement
+                    const parent = event.target.parentElement;
                     const id = parent.id;
                     btn.classList.toggle('filllike');
                     if(btn.classList.contains('filllike')) {
+                        posts[id].like = true;
                         axios.post('/set/like', {
                             post: posts[id]
                         });
                     } else {
+                        delete posts[id].like;
                         axios.delete('/set/like', {
                             data : {
                                 post: posts[id]
@@ -70,7 +74,9 @@ export default async function main(params) {
                     alert('좋아요 기능을 사용하려면 로그인 하세요.');
                 }
             } else {
-                // 상세게시글
+                const index = event.target.parentElement.id;
+                history.pushState({ 'post': posts[index] }, null, `?page=post&postid=${index}`);
+                window.dispatchEvent(new Event('locationchange'));
             } 
         });
     }

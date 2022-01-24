@@ -1,4 +1,5 @@
 
+import detailpost from './pages/detailpost.js';
 import login from './pages/login.js';
 import main from './pages/main.js';
 import signup from './pages/signup.js';
@@ -46,7 +47,7 @@ const router = async () => {
         case "setregion":
         
         case "post":
-        
+            detailpost();
         case "chatroom":
             
     }

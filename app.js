@@ -1,17 +1,17 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const dotenv = require('dotenv');
-const url = require('url');
-const querystring = require('querystring');
-const { sequelize, User, User_Region, Store, Region, Post, Likes, Image, Chatroom, Chatmessage } = require('./models');
+const http = require('http');
+const server = http.createServer(app);
+const { sequelize } = require('./models');
 const authApi = require('./api/auth/auth');
 const getDataApi = require('./api/page/getData');
 const setDataApi = require('./api/page/setData');
 const session = require('express-session');
 const passport = require('passport');
 const passportConfig = require('./api/auth/passport/passport');
-
+const { Server } = require('socket.io');
+const io = new Server(server);
 
 sequelize.sync({ force: true })
     .then(() => console.log('database connected'))
@@ -30,8 +30,12 @@ app.use('/auth', authApi);
 app.use('/set', setDataApi);
 app.get("/*", (req, res) => {
     res.sendFile(path.resolve('public', 'index.html'));
-})
+});
 
-app.listen(3000, () => {
+io.on('connection', (socket) => {
+    console.log('WS connected');
+});
+
+server.listen(3000, () => {
     console.log("Server ON");
 })
