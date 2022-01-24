@@ -19,6 +19,7 @@ module.exports = class Chatroom extends Model {
     }
 
     static associate(db) {
-        
+        db.Chatroom.belongsTo(db.User);
+        db.Chatroom.belongsTo(db.Post);
     }
 }

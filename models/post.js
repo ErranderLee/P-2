@@ -47,5 +47,6 @@ module.exports = class Post extends Model {
         db.Post.hasMany(db.Image);
         db.Post.belongsTo(db.Store);
         db.Post.belongsToMany(db.User, { through : db.Likes });
+        db.Post.hasMany(db.Chatroom);
     }
 }

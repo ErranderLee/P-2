@@ -1,4 +1,5 @@
 
+import chatroom from './pages/chatroom.js';
 import detailpost from './pages/detailpost.js';
 import login from './pages/login.js';
 import main from './pages/main.js';
@@ -48,8 +49,10 @@ const router = async () => {
         
         case "post":
             detailpost();
+            break;
         case "chatroom":
-            
+            chatroom();
+            break;
     }
 };
 
