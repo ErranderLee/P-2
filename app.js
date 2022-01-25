@@ -8,6 +8,7 @@ const authApi = require('./api/auth/auth');
 const getDataApi = require('./api/page/getData');
 const setDataApi = require('./api/page/setData');
 const getChatApi = require('./api/chat/getChat');
+const setChatApi = require('./api/chat/setChat');
 const session = require('express-session');
 const passport = require('passport');
 const passportConfig = require('./api/auth/passport/passport');
@@ -30,12 +31,24 @@ app.use('/data', getDataApi);
 app.use('/auth', authApi);
 app.use('/set', setDataApi);
 app.use('/chat', getChatApi);
+app.use('/chat', setChatApi);
 app.get("/*", (req, res) => {
     res.sendFile(path.resolve('public', 'index.html'));
 });
 
 io.on('connection', (socket) => {
     console.log('WS connected');
+    socket.on('join', (params) => {
+        console.log(params.chatroomid);
+        socket.join(params.chatroomid);
+    })
+    socket.on('chat message', (msg) => {
+        io.to(msg.chatroomid).emit('chat message', msg);
+        console.log('message: ' + msg.chatroomid, msg.msg);
+    });
+    socket.on('disconnect', () => {
+        console.log('WS disconnect');
+    });
 });
 
 server.listen(3000, () => {

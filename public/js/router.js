@@ -12,8 +12,7 @@ const router = async () => {
     const page = pages.filter(item => item === params.page).join("");
     const $ = document;
 
-    const authenticatedUserTemp = await axios.get('/auth/getAuthenticatedUser');
-    const authenticatedUser = authenticatedUserTemp.data;
+    const { data: authenticatedUser } = await axios.get('/auth/getAuthenticatedUser');
     const divLogin = $.querySelector('.header_login');
 
     if(Object.keys(authenticatedUser).length) {
@@ -51,7 +50,7 @@ const router = async () => {
             detailpost();
             break;
         case "chatroom":
-            chatroom();
+            chatroom(params);
             break;
     }
 };
@@ -63,6 +62,8 @@ window.addEventListener('locationchange', () => {
     router();
 });
 
-window.addEventListener('popstate', () => router());
+window.addEventListener('popstate', () => {
+    router();
+});
 
 

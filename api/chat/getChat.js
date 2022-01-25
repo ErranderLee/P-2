@@ -1,23 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { Chatroom } = require('../../models');
+const { getChatroom, getChatmessages } = require('../service/getChat');
 
-router.get('/getChatroom', async (req, res) => {
-    const exChatroom = await Chatroom.findOne({
-         where: {
-            UserUserid : req.user.userid,
-            PostPostid : parseInt(req.query.postid)
-        }
-    });
-    if(exChatroom === null) {
-        const newChatroom = await Chatroom.create({
-            UserUserid : req.user.userid,
-            PostPostid : parseInt(req.query.postid)
-        });
-        res.json({ chatroom : newChatroom });
-    } else {
-        res.json({ chatroom : exChatroom });
-    }
-});
+router.get('/getChatroom', getChatroom);
+
+router.get('/getChatmessages', getChatmessages);
 
 module.exports = router;

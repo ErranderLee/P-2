@@ -1,7 +1,6 @@
 
 export default async function detailpost() {
     const { post } = history.state;
-    console.log(post);
     const $ = document;
     const content = $.querySelector('.content');
 
@@ -29,8 +28,15 @@ export default async function detailpost() {
     const { data: authenticatedUser } = await axios.get('/auth/getAuthenticatedUser');
     const chatBtn = $.querySelector('.chat_button');
 
-    if(post.hasOwnProperty('like')) {
-        likeBtn.classList.add('filllike');
+    if(Object.keys(authenticatedUser).length) {
+        const { data: isliked } = await axios.get('/data/isliked', {
+            params: {
+                postid: post.postid
+            }
+        });
+        if (isliked) {
+            likeBtn.classList.add('filllike');
+        }
     }
 
     likeBtn.addEventListener('click', () => {
@@ -52,11 +58,16 @@ export default async function detailpost() {
         }
     });
 
-    chatBtn.addEventListener('click', () => {
+    chatBtn.addEventListener('click', async () => {
         if(Object.keys(authenticatedUser).length) {
             const confirm = window.confirm('채팅을 신청하시겠습니까?');
             if(confirm) {
-                history.pushState({ postid: post.postid }, null, `?page=chatroom`);
+                const { data : { chatroom }} = await axios.get('/chat/getChatroom', {
+                    params: {
+                        postid: post.postid
+                    }
+                });
+                history.pushState({ post : post }, null, `?page=chatroom&chatroomid=${chatroom.chatroomid}`);
                 window.dispatchEvent(new Event('locationchange'));
             }
         } else {

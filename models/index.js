@@ -45,7 +45,7 @@ Post.init(sequelize);
 Likes.init(sequelize);
 Image.init(sequelize);
 Chatroom.init(sequelize);
-// Chatmessage.init(sequelize);
+Chatmessage.init(sequelize);
 
 User.associate(db);
 User_Region.associate(db);
@@ -55,6 +55,6 @@ Post.associate(db);
 Likes.associate(db);
 Image.associate(db);
 Chatroom.associate(db);
-// Chatmessage.associate(db);
+Chatmessage.associate(db);
 
 module.exports = db;

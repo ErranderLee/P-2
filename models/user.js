@@ -30,5 +30,6 @@ module.exports = class User extends Model {
         db.User.belongsToMany(db.Region, { through: db.User_Region });
         db.User.belongsToMany(db.Post, { through : db.Likes });
         db.User.hasMany(db.Chatroom);
+        db.User.hasMany(db.Chatmessage);
     }
 }
