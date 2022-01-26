@@ -44,6 +44,8 @@ module.exports = async () => {
     const password = await bcrypt.hash('test', 10);
     const u1 = await User.create({ id: 'test', password: password });
     await u1.addRegion(r1);
+    await u1.addRegion(r2);
+    await u1.addRegion(r3);
     await s1.addPost(p1);
     await s1.addPost(p2);
     await s2.addPost(p3);
