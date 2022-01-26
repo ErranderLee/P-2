@@ -1,4 +1,5 @@
 
+import chatlist from './pages/chatlist.js';
 import chatroom from './pages/chatroom.js';
 import detailpost from './pages/detailpost.js';
 import likelist from './pages/likelist.js';
@@ -38,7 +39,7 @@ const router = async () => {
             likelist();
             break;
         case "chatlist":
-            console.log('chatlist');
+            chatlist();
             break;
         case "login":
             login();

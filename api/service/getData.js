@@ -53,6 +53,22 @@ const getData = {
             res.json(likePosts);
         }
     },
+    getChatPosts: async (req, res) => {
+        const exUser = req.user;
+        const chatrooms = await exUser.getChatrooms();
+        const chatPosts = await Promise.all(chatrooms.map(async (chatroom) => {
+            return chatroom.getPost({ include: [{ model:Store }, { model:Region }, { model:User }]});
+        }));
+        const likePosts = await exUser.getPosts();
+        if(chatPosts === null) {
+            res.json(null);
+        } else {
+            res.json({
+                chatPosts: chatPosts,
+                likePosts: likePosts
+            });
+        }
+    },
     createTestDB: async (req, res) => {
         testDb();
         res.json();
