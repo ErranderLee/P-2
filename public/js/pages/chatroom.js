@@ -50,13 +50,22 @@ export default async function chatroom(params) {
     exitBtn.addEventListener('click', () => {
         const confirm = window.confirm('채팅방을 종료하시겠습니까?');
         if(confirm) {
-            // 채팅 기록 삭제.
+            axios.delete('/chat/deleteChatroom', {
+                data : {
+                    chatroomid: params.chatroomid
+                }
+            });
+            socket.emit('leave', {
+                chatroomid: params.chatroomid
+            });
+            history.pushState(null, null, '/');
+            window.dispatchEvent(new Event('locationchange'));
         }
     });
 
-    socket.on('chat message', (msg) => {
+    socket.on('chat message', async (msg) => {
         chat.innerHTML += `<p class="user">${msg.msg}</p>`;
-        axios.post('/chat/setChatmessage', {
+        await axios.post('/chat/setChatmessage', {
             message: msg.msg,
             chatroomid: params.chatroomid
         });

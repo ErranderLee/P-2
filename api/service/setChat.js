@@ -7,6 +7,9 @@ const setChat = {
         });
         const exUser = req.user;
         await exUser.addChatmessage(newChatmessage);
+    },
+    deleteChatroom: async (req, res) => {
+        await Chatroom.destroy({ where : { chatroomid: req.body.chatroomid }});
     }
 }
 

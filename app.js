@@ -41,6 +41,10 @@ io.on('connection', (socket) => {
     socket.on('join', (params) => {
         console.log(params.chatroomid);
         socket.join(params.chatroomid);
+    });
+    socket.on('leave', (params) => {
+        console.log('leave');
+        socket.leave(params.chatroomid);
     })
     socket.on('chat message', (msg) => {
         io.to(msg.chatroomid).emit('chat message', msg);

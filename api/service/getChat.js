@@ -4,13 +4,13 @@ const getChat = {
         const exChatroom = await Chatroom.findOne({
              where: {
                 UserUserid : req.user.userid,
-                PostPostid : parseInt(req.query.postid)
+                PostPostid : req.query.postid
             }
         });
         if(exChatroom === null) {
             const newChatroom = await Chatroom.create({
                 UserUserid : req.user.userid,
-                PostPostid : parseInt(req.query.postid)
+                PostPostid : req.query.postid
             });
             res.json({ chatroom : newChatroom });
         } else {
@@ -20,7 +20,7 @@ const getChat = {
     getChatmessages : async (req, res) => {
         const chatmessages = await Chatmessage.findAll({
             where: {
-                ChatroomChatroomid: parseInt(req.query.chatroomid)
+                ChatroomChatroomid: req.query.chatroomid
             }
         });
         if(chatmessages === null) {

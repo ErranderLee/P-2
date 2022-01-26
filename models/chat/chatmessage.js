@@ -24,6 +24,8 @@ module.exports = class Chatmessage extends Model {
 
     static associate(db) {
         db.Chatmessage.belongsTo(db.User);
-        db.Chatmessage.belongsTo(db.Chatroom);
+        db.Chatmessage.belongsTo(db.Chatroom, {
+            onDelete: 'CASCADE'
+        });
     }
 }

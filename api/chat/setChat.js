@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { setChatmessage } = require('../service/setChat');
+const { setChatmessage, deleteChatroom } = require('../service/setChat');
 
 router.post('/setChatmessage', setChatmessage);
+
+router.delete('/deleteChatroom', deleteChatroom);
 
 module.exports = router;
