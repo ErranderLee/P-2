@@ -1,4 +1,4 @@
-const { Region, User, Store, Likes } = require('../../models');
+const { Region, User, Store, Likes, Post } = require('../../models');
 const testDb = require('../../testDb');
 const getData = {
     getRegions: async (req, res) => {
@@ -42,6 +42,15 @@ const getData = {
             res.json(false);
         } else {
             res.json(true);
+        }
+    },
+    getLikePosts: async (req, res) => {
+        const exUser = req.user;
+        const likePosts = await exUser.getPosts({ include: [{ model:Store }, { model:Region }] });
+        if(likePosts === null) {
+            res.json(null);
+        } else {
+            res.json(likePosts);
         }
     },
     createTestDB: async (req, res) => {

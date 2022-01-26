@@ -45,6 +45,7 @@ export default async function main(params) {
 
         const selectedRegion = $.querySelector('.region');
         const selectRegion = $.querySelector('.select_region');
+        
         selectedRegion.addEventListener('click', () => {
             selectRegion.classList.toggle('hidden');
         });
@@ -63,7 +64,7 @@ export default async function main(params) {
                     posts[index].like = true;
                     btn.classList.add('filllike');
                 }
-            })
+            });
         }
         
         const postsDiv = $.querySelector('.posts');
@@ -85,7 +86,7 @@ export default async function main(params) {
                             data : {
                                 post: posts[id]
                             }
-                        })
+                        });
                     }
                 } else {
                     alert('좋아요 기능을 사용하려면 로그인 하세요.');

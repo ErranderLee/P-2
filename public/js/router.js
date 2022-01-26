@@ -1,6 +1,7 @@
 
 import chatroom from './pages/chatroom.js';
 import detailpost from './pages/detailpost.js';
+import likelist from './pages/likelist.js';
 import login from './pages/login.js';
 import main from './pages/main.js';
 import signup from './pages/signup.js';
@@ -34,10 +35,11 @@ const router = async () => {
             main(params);
             break;
         case "likelist":
-            console.log("likelist");
+            likelist();
             break;
         case "chatlist":
-        
+            console.log('chatlist');
+            break;
         case "login":
             login();
             break;
@@ -45,7 +47,8 @@ const router = async () => {
             signup();
             break;
         case "setregion":
-        
+            console.log('setregion');
+            break;
         case "post":
             detailpost();
             break;
