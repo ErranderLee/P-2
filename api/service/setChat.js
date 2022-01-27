@@ -1,15 +1,19 @@
 const { Chatroom, Chatmessage } = require('../../models');
 const setChat = {
     setChatmessage : async (req, res) => {
+        const { message, chatroomid } = req.body;
         const newChatmessage = await Chatmessage.create({
-            message: req.body.message,
-            ChatroomChatroomid: req.body.chatroomid
+            message: message,
+            ChatroomChatroomid: chatroomid
         });
         const exUser = req.user;
         await exUser.addChatmessage(newChatmessage);
+        res.json();
     },
     deleteChatroom: async (req, res) => {
-        await Chatroom.destroy({ where : { chatroomid: req.body.chatroomid }});
+        const { chatroomid } = req.body;
+        await Chatroom.destroy({ where : { chatroomid: chatroomid }});
+        res.json();
     }
 }
 

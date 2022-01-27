@@ -15,9 +15,7 @@ export default async function main(params) {
     } else {
         const region = params.region;
         const { data : { posts, likePosts } } = await axios.get('/data/post', { params: { region: region }});
-
         const likePostsIds = likePosts !== null ? likePosts.map(post => post.postid) : [];
-
         const $ = document;
         const content = $.querySelector('.content');
         const { data: authenticatedUser } = await axios.get('/auth/getAuthenticatedUser');
@@ -45,7 +43,7 @@ export default async function main(params) {
 
         const selectedRegion = $.querySelector('.region');
         const selectRegion = $.querySelector('.select_region');
-        
+
         selectedRegion.addEventListener('click', () => {
             selectRegion.classList.toggle('hidden');
         });
@@ -76,12 +74,10 @@ export default async function main(params) {
                     const id = parent.id;
                     btn.classList.toggle('filllike');
                     if(btn.classList.contains('filllike')) {
-                        posts[id].like = true;
                         axios.post('/set/like', {
                             post: posts[id]
                         });
                     } else {
-                        delete posts[id].like;
                         axios.delete('/set/like', {
                             data : {
                                 post: posts[id]

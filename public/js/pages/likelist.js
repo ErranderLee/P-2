@@ -25,31 +25,31 @@ export default async function likelist() {
             }).join('')}
             </div>
             `;
-        const postsDiv = $.querySelector('.posts');
-        postsDiv.addEventListener('click', async (event) => {
-            if(event.target.tagName === 'BUTTON') {
-                const btn = event.target;
-                const parent = event.target.parentElement;
-                const id = parent.id;
-                btn.classList.toggle('filllike');
-                if(btn.classList.contains('filllike')) {
-                    likePosts[id].like = true;
-                    axios.post('/set/like', {
-                        post: likePosts[id]
-                    });
-                } else {
-                    delete likePosts[id].like;
-                    axios.delete('/set/like', {
-                        data : {
-                            post: likePosts[id]
-                        }
-                    });
-                }
-            } else {
-                const index = event.target.parentElement.id;
-                history.pushState({ 'post': likePosts[index] }, null, `?page=post&postid=${index}`);
-                window.dispatchEvent(new Event('locationchange'));
-            } 
-        });
     }
+    const postsDiv = $.querySelector('.posts');
+    postsDiv.addEventListener('click', async (event) => {
+        if(event.target.tagName === 'BUTTON') {
+            const btn = event.target;
+            const parent = event.target.parentElement;
+            const id = parent.id;
+            btn.classList.toggle('filllike');
+            if(btn.classList.contains('filllike')) {
+                likePosts[id].like = true;
+                axios.post('/set/like', {
+                    post: likePosts[id]
+                });
+            } else {
+                delete likePosts[id].like;
+                axios.delete('/set/like', {
+                    data : {
+                        post: likePosts[id]
+                    }
+                });
+            }
+        } else {
+            const index = event.target.parentElement.id;
+            history.pushState({ 'post': likePosts[index] }, null, `?page=post&postid=${index}`);
+            window.dispatchEvent(new Event('locationchange'));
+        } 
+    });
 }
